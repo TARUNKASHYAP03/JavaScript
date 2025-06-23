@@ -1,0 +1,25 @@
+const name=new String("Tarun Kumar");
+
+console.log(name.toUpperCase());
+console.log(name.toLowerCase());
+console.log(name.length);
+console.log(name.charAt(0));
+console.log(name.indexOf("Kumar"));
+console.log(name.lastIndexOf("Kumar"));
+console.log(name.slice(0, 5));
+console.log(name.substring(0, 5));
+console.log(name.replace("Tarun", "John"));
+console.log(name.split(" "));
+console.log(name.trim());
+console.log(name.startsWith("Tarun"));
+console.log(name.endsWith("Kumar"));
+console.log(name.includes("Kumar"));
+console.log(name.valueOf());
+console.log(name.search("Kumar"));
+console.log(name.concat(" Singh"));
+console.log(name.toString());
+console.log(name.match(/Kumar/));
+console.log(name.localeCompare("Tarun Kumar Singh"));
+console.log(name.padStart(20, "*"));
+console.log(name.padEnd(20, "*"));
+console.log(name.repeat(2));
