@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BMI Calculator</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap">
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="calculator-card">
+        <h1>BMI Calculator</h1>
+        <form action="" id="bmi-form">
+          <div class="input-group">
+            <label for="height">Height in CM:</label>
+            <input type="number" id="height" placeholder="Enter height in cm" step="0.1" min="50" max="250"/>
+            <div id="height-error" class="error">Please enter a valid height between 50-250 cm</div>
+          </div>
+          <div class="input-group">
+            <label for="weight">Weight in KG:</label>
+            <input type="number" id="weight" placeholder="Enter weight in kg" step="0.1" min="10" max="300"/>
+            <div id="weight-error" class="error">Please enter a valid weight between 10-300 kg</div>
+          </div>
+          <button type="submit">Calculate BMI</button>
+          <div id="result" class="result"></div>
+        </form>
+        <div id="weight-guide">
+          <h2>Weight Guide</h2>
+          <ul>
+            <li><span class="bmi-category underweight">Underweight</span>: BMI &lt; 18.5</li>
+            <li><span class="bmi-category normal">Normal weight</span>: 18.5 ≤ BMI &lt; 24.9</li>
+            <li><span class="bmi-category overweight">Overweight</span>: 25 ≤ BMI &lt; 29.9</li>
+            <li><span class="bmi-category obesity">Obesity</span>: BMI ≥ 30</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
