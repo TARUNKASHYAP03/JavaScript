@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Body Colour Change</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        transition: background-color 0.5s ease;
+      }
+
+      .main {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 8px;
+        background-color: #333;
+        color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+
+      button:hover {
+        background-color: #555;
+        transform: scale(1.05);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="main">
+      <h1>Colour Change</h1>
+      <button id="start">Start</button>
+      <button id="stop">Stop</button>
+    </div>
+
+    <script>
+      const start = document.querySelector("#start");
+      const stop = document.querySelector("#stop");
+      let interVal = null;
+
+      const randomColor = () => {
+        const hex = "0123456789ABCDEF";
+        let color = "#";
+        for (let i = 0; i < 6; i++) {
+          color += hex[Math.floor(Math.random() * 16)];
+        }
+        document.body.style.backgroundColor = color;
+        console.log(color);
+      };
+
+      start.addEventListener("click", () => {
+        if (!interVal) {
+          interVal = setInterval(randomColor, 2000);
+        }
+      });
+
+      stop.addEventListener("click", () => {
+        clearInterval(interVal);
+        interVal = null;
+      });
+    </script>
+  </body>
+</html>

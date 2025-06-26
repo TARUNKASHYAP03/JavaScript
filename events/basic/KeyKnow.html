@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Know Key</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background-color: #f0f0f0;
+    }
+    .key-box {
+      padding: 20px;
+      margin: 10px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      font-size: 24px;
+      min-width: 300px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Press any key</h1>
+  <div class="key-box" id="output">Waiting...</div>
+
+  <script>
+    const output = document.getElementById('output');
+
+    window.addEventListener('keydown', (e) => {
+      const char = e.key;
+      const code = e.code;
+      const ascii = char.length === 1 ? char.charCodeAt(0) : 'N/A'; // for printable chars
+
+      output.innerHTML = `
+        <strong>Key:</strong> ${char} <br/>
+        <strong>Code:</strong> ${code} <br/>
+        <strong>ASCII:</strong> ${ascii}
+      `;
+    });
+  </script>
+
+</body>
+</html>
