@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess The Number Game</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <h1>Number Guessing Game</h1>
+        </header>
+        
+        <main class="game-content">
+            <div class="game-instructions">
+                <p>We have selected a random number between 1 and 100.</p>
+                <p>See if you can guess it in 10 turns or fewer.</p>
+                <p>We'll tell you if your guess was too high or too low.</p>
+            </div>
+            
+            <form id="guess-form" class="guess-form">
+                <label for="guess-input" class="input-label">Enter your guess:</label>
+                <input type="number" id="guess-input" class="guess-input" min="1" max="100" required>
+                <div class="button-group">
+                    <button type="submit" class="btn submit-btn">Submit Guess</button>
+                    <button type="button" class="btn reset-btn" id="reset-btn">New Game</button>
+                </div>
+            </form>
+            
+            <div class="game-feedback">
+                <div class="feedback-item">
+                    <span class="feedback-label">Previous guesses:</span>
+                    <span id="previous-guesses" class="feedback-value"></span>
+                </div>
+                <div class="feedback-item">
+                    <span class="feedback-label">Guesses remaining:</span>
+                    <span id="guesses-remaining" class="feedback-value">10</span>
+                </div>
+                <div id="hint-message" class="hint-message"></div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
