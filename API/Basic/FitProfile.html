@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Social Profile Viewer</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #2d3436;
+      --secondary: #636e72;
+      --accent: #6c5ce7;
+      --light: #dfe6e9;
+      --white: #ffffff;
+      --shadow: 0 5px 15px rgba(0,0,0,0.1);
+      --card-bg: rgba(255, 255, 255, 0.95);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    h1 {
+      color: var(--primary);
+      margin-bottom: 25px;
+      font-weight: 700;
+      font-size: 1.8rem;
+      letter-spacing: -0.5px;
+    }
+    
+    .search-box {
+      width: 100%;
+      max-width: 500px;
+      margin-bottom: 25px;
+      display: flex;
+      gap: 10px;
+    }
+    
+    .search-box input {
+      flex: 1;
+      padding: 12px 20px;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      font-size: 15px;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+      background: var(--white);
+    }
+    
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 5px 15px rgba(108, 92, 231, 0.2);
+    }
+    
+    .search-box button {
+      padding: 0 25px;
+      border: none;
+      background-color: var(--accent);
+      color: var(--white);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 500;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .search-box button:hover {
+      background-color: #5a4bcf;
+      transform: translateY(-2px);
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 380px;
+      margin: 0 auto;
+      padding: 25px;
+      background: var(--card-bg);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      display: none;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+    
+    .container.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .profile-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    
+    .avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--white);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      margin-bottom: 15px;
+    }
+    
+    .name {
+      color: var(--primary);
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    
+    .username {
+      color: var(--secondary);
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+    }
+    
+    .bio {
+      color: var(--secondary);
+      font-size: 0.85rem;
+      line-height: 1.5;
+      margin-bottom: 18px;
+    }
+    
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 20px;
+      background: rgba(108, 92, 231, 0.1);
+      padding: 12px;
+      border-radius: 10px;
+    }
+    
+    .stat {
+      text-align: center;
+    }
+    
+    .stat-value {
+      color: var(--accent);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+    
+    .stat-label {
+      color: var(--secondary);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .social-links {
+      margin-bottom: 20px;
+    }
+    
+    .social-link {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+      color: var(--secondary);
+      font-size: 0.85rem;
+    }
+    
+    .social-link i {
+      width: 25px;
+      color: var(--accent);
+      font-size: 0.9rem;
+    }
+    
+    .social-link a {
+      color: var(--secondary);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .social-link a:hover {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+    
+    .profile-btn {
+      display: inline-block;
+      width: 100%;
+      padding: 10px;
+      background-color: var(--accent);
+      color: var(--white);
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    
+    .profile-btn:hover {
+      background-color: #5a4bcf;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(108, 92, 231, 0.3);
+    }
+    
+    .error {
+      color: #ff4757;
+      margin-top: 15px;
+      font-weight: 500;
+      display: none;
+      font-size: 0.9rem;
+    }
+    
+    .platform-icon {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <h1>Social Profile Viewer</h1>
+  
+  <div class="search-box">
+    <input type="text" id="username" placeholder="Enter GitHub/Twitter/LinkedIn/Instagram profile URL" />
+    <button onclick="getProfile()">
+      <i class="fas fa-search"></i> Search
+    </button>
+  </div>
+  
+  <p class="error" id="errorMsg">Profile not found. Please try again.</p>
+
+  <div class="container" id="profileCard">
+    <div class="profile-header">
+      <div id="platformIcon" class="platform-icon">
+        <i class="fab fa-github"></i>
+      </div>
+      <img class="avatar" id="avatar" src="" alt="Profile Picture" />
+      <h2 class="name" id="name">Name</h2>
+      <p class="username" id="usernameText">@username</p>
+      <p class="bio" id="bio">No bio available</p>
+    </div>
+    
+    <div class="stats" id="stats">
+      <!-- Stats will be shown if available (GitHub only) -->
+    </div>
+    
+    <div class="social-links" id="socialLinks">
+      <!-- Social links will be shown if available -->
+    </div>
+    
+    <a class="profile-btn" id="profileLink" href="" target="_blank">
+      <i class="fas fa-external-link-alt"></i> View Profile
+    </a>
+  </div>
+
+  <script>
+    function detectPlatform(url) {
+      if (url.includes("github.com/")) return "github";
+      if (url.includes("twitter.com/") || url.includes("x.com/")) return "twitter";
+      if (url.includes("linkedin.com/in/")) return "linkedin";
+      if (url.includes("instagram.com/")) return "instagram";
+      return null;
+    }
+
+    function extractUsername(url, platform) {
+      if (!platform) return url.trim();
+      
+      const parts = url.split("/");
+      let username = parts[parts.length - 1];
+      
+      // Remove query params (e.g., ?utm_source)
+      if (username.includes("?")) {
+        username = username.split("?")[0];
+      }
+      
+      return username.trim();
+    }
+
+    function getProfile() {
+      const input = document.getElementById("username").value;
+      const platform = detectPlatform(input);
+      const username = extractUsername(input, platform);
+      
+      if (!username) {
+        showError("Please enter a valid profile URL");
+        return;
+      }
+      
+      const errorElement = document.getElementById("errorMsg");
+      errorElement.style.display = "none";
+
+      // Clear previous data
+      document.getElementById("stats").innerHTML = "";
+      document.getElementById("socialLinks").innerHTML = "";
+      
+      // Set platform icon
+      const platformIcon = document.getElementById("platformIcon");
+      let iconClass, platformName;
+      
+      switch (platform) {
+        case "github":
+          iconClass = "fab fa-github";
+          platformName = "GitHub";
+          fetchGitHubProfile(username);
+          break;
+        case "twitter":
+          iconClass = "fab fa-twitter";
+          platformName = "Twitter";
+          showTwitterProfile(username);
+          break;
+        case "linkedin":
+          iconClass = "fab fa-linkedin";
+          platformName = "LinkedIn";
+          showLinkedInProfile(username);
+          break;
+        case "instagram":
+          iconClass = "fab fa-instagram";
+          platformName = "Instagram";
+          showInstagramProfile(username);
+          break;
+        default:
+          iconClass = "fas fa-user";
+          platformName = "Profile";
+          showGenericProfile(username);
+      }
+      
+      platformIcon.innerHTML = `<i class="${iconClass}"></i>`;
+      document.getElementById("usernameText").innerText = `@${username}`;
+      document.getElementById("profileLink").href = input.includes("http") ? input : `https://${platform}.com/${username}`;
+    }
+    
+    function fetchGitHubProfile(username) {
+      const gitUrl = `https://api.github.com/users/${username}`;
+      
+      fetch(gitUrl)
+        .then(res => {
+          if (!res.ok) throw new Error("GitHub profile not found");
+          return res.json();
+        })
+        .then(data => {
+          const profileCard = document.getElementById("profileCard");
+          
+          // Update profile data
+          document.getElementById("avatar").src = data.avatar_url;
+          document.getElementById("name").innerText = data.name || username;
+          document.getElementById("bio").innerText = data.bio || "No bio available";
+          
+          // Add stats
+          const statsHTML = `
+            <div class="stat">
+              <div class="stat-value">${data.followers}</div>
+              <div class="stat-label">Followers</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">${data.following}</div>
+              <div class="stat-label">Following</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">${data.public_repos}</div>
+              <div class="stat-label">Repos</div>
+            </div>
+          `;
+          document.getElementById("stats").innerHTML = statsHTML;
+          
+          // Add social links
+          let socialLinksHTML = "";
+          
+          if (data.twitter_username) {
+            socialLinksHTML += `
+              <div class="social-link">
+                <i class="fab fa-twitter"></i>
+                <a href="https://twitter.com/${data.twitter_username}" target="_blank">Twitter: @${data.twitter_username}</a>
+              </div>
+            `;
+          }
+          
+          if (data.blog) {
+            socialLinksHTML += `
+              <div class="social-link">
+                <i class="fas fa-globe"></i>
+                <a href="${data.blog.startsWith('http') ? data.blog : 'https://' + data.blog}" target="_blank">Website: ${data.blog}</a>
+              </div>
+            `;
+          }
+          
+          if (data.location) {
+            socialLinksHTML += `
+              <div class="social-link">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Location: ${data.location}</span>
+              </div>
+            `;
+          }
+          
+          document.getElementById("socialLinks").innerHTML = socialLinksHTML;
+          
+          // Show card
+          showProfileCard();
+        })
+        .catch(err => {
+          showError("GitHub profile not found. Please check the username.");
+          hideProfileCard();
+        });
+    }
+    
+    function showTwitterProfile(username) {
+      document.getElementById("name").innerText = username;
+      document.getElementById("bio").innerText = "Twitter profile";
+      
+      // Twitter API requires authentication, so we just show basic info
+      document.getElementById("avatar").src = `https://unavatar.io/twitter/${username}`;
+      
+      // Add a note (since we can't fetch full data without API)
+      document.getElementById("socialLinks").innerHTML = `
+        <div class="social-link">
+          <i class="fas fa-info-circle"></i>
+          <span>Sign in to Twitter API for full details</span>
+        </div>
+      `;
+      
+      showProfileCard();
+    }
+    
+    function showLinkedInProfile(username) {
+      document.getElementById("name").innerText = username;
+      document.getElementById("bio").innerText = "LinkedIn profile";
+      document.getElementById("avatar").src = `https://unavatar.io/linkedin/${username}`;
+      
+      document.getElementById("socialLinks").innerHTML = `
+        <div class="social-link">
+          <i class="fas fa-info-circle"></i>
+          <span>LinkedIn API access required for details</span>
+        </div>
+      `;
+      
+      showProfileCard();
+    }
+    
+    function showInstagramProfile(username) {
+      document.getElementById("name").innerText = username;
+      document.getElementById("bio").innerText = "Instagram profile";
+      document.getElementById("avatar").src = `https://unavatar.io/instagram/${username}`;
+      
+      document.getElementById("socialLinks").innerHTML = `
+        <div class="social-link">
+          <i class="fas fa-info-circle"></i>
+          <span>Instagram API access required for details</span>
+        </div>
+      `;
+      
+      showProfileCard();
+    }
+    
+    function showGenericProfile(username) {
+      document.getElementById("name").innerText = username;
+      document.getElementById("bio").innerText = "Social media profile";
+      document.getElementById("avatar").src = `https://ui-avatars.com/api/?name=${username}&background=6c5ce7&color=fff`;
+      
+      document.getElementById("socialLinks").innerHTML = `
+        <div class="social-link">
+          <i class="fas fa-info-circle"></i>
+          <span>Enter a GitHub, Twitter, LinkedIn, or Instagram URL</span>
+        </div>
+      `;
+      
+      showProfileCard();
+    }
+    
+    function showProfileCard() {
+      const profileCard = document.getElementById("profileCard");
+      profileCard.style.display = "block";
+      setTimeout(() => {
+        profileCard.classList.add("show");
+      }, 10);
+    }
+    
+    function hideProfileCard() {
+      const profileCard = document.getElementById("profileCard");
+      profileCard.classList.remove("show");
+      setTimeout(() => {
+        profileCard.style.display = "none";
+      }, 400);
+    }
+    
+    function showError(message) {
+      const errorElement = document.getElementById("errorMsg");
+      errorElement.innerText = message;
+      errorElement.style.display = "block";
+      hideProfileCard();
+    }
+    
+    // Allow searching by pressing Enter key
+    document.getElementById("username").addEventListener("keypress", function(e) {
+      if (e.key === "Enter") {
+        getProfile();
+      }
+    });
+  </script>
+</body>
+</html>
