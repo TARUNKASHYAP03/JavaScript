@@ -1,18 +1,13 @@
-let arr = [1, 2, 8, 5, 6, 10, 8, 9, 7];
+function isPrime(x) {
+//   if (x < 2) return false;
 
-let sum = 0;
+//   for (let i = 2; i < Math.sqrt(x); i++) {
+//     if (x % i == 0) {
+//       return false;
+//     }
+//   }
 
-function SumN() {
-  for (let i = 0; i < arr.length; i++) {
-    sum += arr[i];
-  }
+//   return true;
+// }
 
-  console.log(sum);
-}
-
-SumN();
-
-let sort = arr.sort((a, b) => a - b);
-console.log(sort);
-
-function misingNum() {}
+// console.log(isPrime(2));
