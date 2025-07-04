@@ -1,13 +1,13 @@
-function isPrime(x) {
-//   if (x < 2) return false;
-
-//   for (let i = 2; i < Math.sqrt(x); i++) {
-//     if (x % i == 0) {
-//       return false;
+let addDigits = function (num) {
+//   while (num >= 10) {
+//     let sum = 0;
+//     let str = String(num);
+//     for (let i = 0; i < str.length; i++) {
+//       sum += Number(str[i]);
 //     }
+//     num = sum;
 //   }
+//   return num;
+// };
 
-//   return true;
-// }
-
-// console.log(isPrime(2));
+// console.log(addDigits(4132));
